@@ -1,0 +1,107 @@
+%tensorflow_version 2.1
+
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+import io
+import pandas as pd
+from tensorflow.keras import layers
+
+
+from google.colab import files
+data = files.upload()
+
+# Print versions
+!python --versions
+print('Numpy ' + np.__version__)
+print('TensorFlow ' + tf.__version__)
+print('Keras ' + tf.keras.__version__)
+
+# Settings
+nsamples = 270     # Number of samples to use as a dataset
+val_ratio = 0.2     # Percentage of samples that should be held for validation set
+test_ratio = 0.2    # Percentage of samples that should be held for test set
+tflite_model_name = 'sine_model'  # Will be given .tflite suffix
+c_model_name = 'sine_model'       # Will be given .h suffix
+
+import pandas as pd
+import io
+
+data = pd.read_csv("Right.csv")
+print(data)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# plt.rcParams["figure.figsize"] = [10, 5]
+# plt.rcParams["figure.autolayout"] = True
+
+# headers = ['Time','X', 'Y', 'Z']
+
+# df = pd.read_csv('Right.csv', names=headers)
+
+# df.set_index('X').plot()
+data = pd.read_csv("Right.csv")
+time = data['Time'].tolist()
+x = data['X'].tolist()
+# y = data['Y'].tolist()
+# z = data['Z'].tolist()
+plt.plot(time,x)
+# plt.plot(time,y)
+# plt.plot(time,z)
+plt.show()
+
+# Plit the dataset into training, validation, and test sets
+val_split = int(val_ratio * nsamples)
+test_split = int(val_split + (test_ratio * nsamples))
+x_val, x_test, x_train = np.split(x, [val_split, test_split])
+time_val, time_test, time_train = np.split(time, [val_split, test_split])
+
+# Check that our splits add up correctly
+assert(x_train.size + x_val.size + x_test.size) == nsamples
+
+# Plot the data in each partition in different colors:
+plt.plot(time_train, x_train, 'b.', label="Train")
+plt.plot(time_test, x_test, 'r.', label="Test")
+plt.plot(time_val, x_val, 'y.', label="Validate")
+plt.legend()
+plt.show()
+
+# Plit the dataset into training, validation, and test sets
+val_split = int(val_ratio * nsamples)
+test_split = int(val_split + (test_ratio * nsamples))
+x_val, x_test, x_train = np.split(x, [val_split, test_split])
+time_val, time_test, time_train = np.split(time, [val_split, test_split])
+
+# Check that our splits add up correctly
+assert(x_train.size + x_val.size + x_test.size) == nsamples
+
+# Plot the data in each partition in different colors:
+plt.plot(time_train, x_train, 'b.', label="Train")
+plt.plot(time_test, x_test, 'r.', label="Test")
+plt.plot(time_val, x_val, 'y.', label="Validate")
+plt.legend()
+plt.show()
+
+
+
+# importing module
+from pandas import *
+
+# reading CSV file
+data = pd.read_csv("Right.csv")
+
+# converting column data to list
+T = data['Time'].tolist()
+ax = data['X'].tolist()
+ay = data['Y'].tolist()
+az = data['Z'].tolist()
+
+
+# printing list data
+print('Shampoo:', T)
+print('Facecream:', ax)
+print('Facewash:', ay)
+print('Toothpaste:', az)

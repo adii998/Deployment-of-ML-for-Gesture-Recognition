@@ -1,0 +1,15 @@
+# Split the dataset into training, validation, and test sets
+val_split = int(val_ratio * nsamples)
+test_split = int(val_split + (test_ratio * nsamples))
+x_val, x_test, x_train = np.split(x, [val_split, test_split])
+time_val, time_test, time_train = np.split(time, [val_split, test_split])
+
+# Check that our splits add up correctly
+assert(x_train.size + x_val.size + x_test.size) == nsamples
+
+# Plot the data in each partition in different colors:
+plt.plot(time_train, x_train, 'b.', label="Train")
+plt.plot(time_test, x_test, 'r.', label="Test")
+plt.plot(time_val, x_val, 'y.', label="Validate")
+plt.legend()
+plt.show()
